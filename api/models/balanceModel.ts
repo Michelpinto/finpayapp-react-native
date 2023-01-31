@@ -10,6 +10,7 @@ const balanceSchema = new mongoose.Schema(
     balance: {
       type: Number,
       required: true,
+      default: 600,
     },
   },
   { timestamps: true }

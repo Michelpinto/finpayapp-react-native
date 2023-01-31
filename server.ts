@@ -11,6 +11,7 @@ connectDb();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/users', require('./api/routes/userRoutes'));
+app.use('/balance', require('./api/routes/balanceRoutes'));
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
