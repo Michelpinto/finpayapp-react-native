@@ -55,6 +55,7 @@ const getUserBalance = asyncHandler(
 const sendMoney = asyncHandler(async (req: Request, res: Response) => {
   try {
     const { sender, receiver, amount } = req.body;
+    const userReceiver = await User.findOne({ email: receiver });
 
     const senderBalance = await Balance.find({ user: sender });
     const senderTotalBalance = getTotalBalance(senderBalance);
@@ -66,7 +67,7 @@ const sendMoney = asyncHandler(async (req: Request, res: Response) => {
       });
 
       await Balance.create({
-        user: receiver,
+        user: userReceiver._id,
         balance: amount,
       });
     }
