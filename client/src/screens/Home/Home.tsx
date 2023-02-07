@@ -56,7 +56,7 @@ const Home: React.FC = ({ navigation, route }: any) => {
   };
 
   const logout = () => {
-    navigation.navigate('Home');
+    navigation.navigate('Login');
     AsyncStorage.removeItem('@finpayApp:user');
   };
 
