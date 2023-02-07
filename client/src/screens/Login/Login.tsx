@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoginUI from './LoginUI';
 
 interface Props {
   navigation: any;
@@ -27,7 +27,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
 
       await AsyncStorage.setItem('@finpayApp:user', user);
 
-      navigation.navigate('Details', {
+      navigation.navigate('Home', {
         email: data?.email,
         id: data?._id,
         name: data?.name,
@@ -40,39 +40,14 @@ const Login: React.FC<Props> = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        onChangeText={(email) => setEmail(email)}
-        value={email}
-        style={styles.input}
-        placeholder='Email'
-        autoCapitalize='none'
-      />
-      <TextInput
-        onChangeText={(password) => setPassword(password)}
-        value={password}
-        secureTextEntry={true}
-        style={styles.input}
-        placeholder='Password'
-      />
-
-      <Button title='Login' onPress={handleSubmit} />
-    </View>
+    <LoginUI
+      handleSubmit={handleSubmit}
+      email={email}
+      setEmail={setEmail}
+      password={password}
+      setPassword={setPassword}
+    />
   );
 };
 
 export default Login;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    width: 200,
-  },
-});
