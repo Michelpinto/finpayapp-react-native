@@ -9,6 +9,7 @@ interface Props {
   password: string;
   setPassword: (password: string) => void;
   handleSubmit: () => void;
+  handleRegister: () => void;
 }
 
 const LoginUI: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const LoginUI: React.FC<Props> = ({
   password,
   setPassword,
   handleSubmit,
+  handleRegister,
 }) => {
   return (
     <View style={styles.container}>
@@ -47,7 +49,7 @@ const LoginUI: React.FC<Props> = ({
 
       <View style={styles.Div}>
         <Text style={styles.linkText}>Don't have an account?</Text>
-        <Button title='Register here' />
+        <Button onPress={handleRegister} title='Register here' />
       </View>
     </View>
   );

@@ -43,6 +43,10 @@ const Register: React.FC<Props> = ({ navigation }) => {
     }
   };
 
+  const handleLogin = () => {
+    navigation.navigate('Login');
+  };
+
   return (
     <RegisterUI
       handleSubmit={handleSubmit}
@@ -52,6 +56,7 @@ const Register: React.FC<Props> = ({ navigation }) => {
       password={password}
       setName={setName}
       name={name}
+      handleLogin={handleLogin}
     />
   );
 };

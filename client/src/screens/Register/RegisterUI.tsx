@@ -10,6 +10,7 @@ interface RegisterUIProps {
   setPassword: (password: string) => void;
   name: string;
   setName: (name: string) => void;
+  handleLogin: () => void;
 }
 
 const RegisterUI: React.FC<RegisterUIProps> = ({
@@ -20,6 +21,7 @@ const RegisterUI: React.FC<RegisterUIProps> = ({
   setPassword,
   name,
   setName,
+  handleLogin,
 }) => {
   return (
     <View style={styles.container}>
@@ -56,7 +58,7 @@ const RegisterUI: React.FC<RegisterUIProps> = ({
 
         <View style={styles.Div}>
           <Text style={styles.linkText}>Already have an account?</Text>
-          <Button title='Login here' />
+          <Button onPress={handleLogin} title='Login here' />
         </View>
       </View>
     </View>
