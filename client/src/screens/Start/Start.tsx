@@ -12,6 +12,10 @@ const Start: React.FC<Props> = ({ navigation }) => {
     navigation.navigate('Login');
   };
 
+  const handleClickRegister = () => {
+    navigation.navigate('Register');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.Div}>
@@ -22,7 +26,10 @@ const Start: React.FC<Props> = ({ navigation }) => {
       </View>
 
       <View style={styles.Buttons}>
-        <TouchableOpacity style={styles.buttonRegister}>
+        <TouchableOpacity
+          onPress={handleClickRegister}
+          style={styles.buttonRegister}
+        >
           <Text style={{ color: 'white', textAlign: 'center', fontSize: 16 }}>
             Register
           </Text>

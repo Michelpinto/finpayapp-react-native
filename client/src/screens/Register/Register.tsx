@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LoginUI from './LoginUI';
+import RegisterUI from './RegisterUI';
 
 interface Props {
   navigation: any;
 }
 
-const Login: React.FC<Props> = ({ navigation }) => {
+const Register: React.FC<Props> = ({ navigation }) => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async () => {
     try {
-      const { data } = await axios.post('http://localhost:6000/users/login', {
+      const { data } = await axios.post('http://localhost:6000/users', {
+        name,
         email,
         password,
       });
@@ -32,27 +34,31 @@ const Login: React.FC<Props> = ({ navigation }) => {
         id: data?._id,
         name: data?.name,
       });
+
       setEmail('');
       setPassword('');
+      setName('');
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleRegister = () => {
-    navigation.navigate('Register');
+  const handleLogin = () => {
+    navigation.navigate('Login');
   };
 
   return (
-    <LoginUI
+    <RegisterUI
       handleSubmit={handleSubmit}
-      email={email}
       setEmail={setEmail}
-      password={password}
+      email={email}
       setPassword={setPassword}
-      handleRegister={handleRegister}
+      password={password}
+      setName={setName}
+      name={name}
+      handleLogin={handleLogin}
     />
   );
 };
 
-export default Login;
+export default Register;
