@@ -39,4 +39,10 @@ export const styles = StyleSheet.create({
   linkText: {
     fontSize: 18,
   },
+  errorMessage: {
+    color: 'red',
+    marginTop: 20,
+    fontSize: 16,
+    textAlign: 'center',
+  },
 });
