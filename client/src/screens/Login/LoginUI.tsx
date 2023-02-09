@@ -10,6 +10,7 @@ interface Props {
   setPassword: (password: string) => void;
   handleSubmit: () => void;
   handleRegister: () => void;
+  errorMsg: string;
 }
 
 const LoginUI: React.FC<Props> = ({
@@ -19,6 +20,7 @@ const LoginUI: React.FC<Props> = ({
   setPassword,
   handleSubmit,
   handleRegister,
+  errorMsg,
 }) => {
   return (
     <View style={styles.container}>
@@ -46,6 +48,8 @@ const LoginUI: React.FC<Props> = ({
           Login
         </Text>
       </TouchableOpacity>
+
+      {errorMsg && <Text style={styles.errorMessage}>{errorMsg}</Text>}
 
       <View style={styles.Div}>
         <Text style={styles.linkText}>Don't have an account?</Text>

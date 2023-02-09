@@ -11,9 +11,19 @@ const Register: React.FC<Props> = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = async () => {
     try {
+      if (!name || !email || !password) {
+        setEmail('');
+        setPassword('');
+        setName('');
+        setErrorMsg('All the fields are required');
+        setTimeout(() => setErrorMsg(''), 4000);
+        return;
+      }
+
       const { data } = await axios.post('http://localhost:6000/users', {
         name,
         email,
@@ -57,6 +67,7 @@ const Register: React.FC<Props> = ({ navigation }) => {
       setName={setName}
       name={name}
       handleLogin={handleLogin}
+      errorMsg={errorMsg}
     />
   );
 };
