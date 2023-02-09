@@ -11,6 +11,7 @@ interface RegisterUIProps {
   name: string;
   setName: (name: string) => void;
   handleLogin: () => void;
+  errorMsg: string;
 }
 
 const RegisterUI: React.FC<RegisterUIProps> = ({
@@ -22,6 +23,7 @@ const RegisterUI: React.FC<RegisterUIProps> = ({
   name,
   setName,
   handleLogin,
+  errorMsg,
 }) => {
   return (
     <View style={styles.container}>
@@ -55,6 +57,8 @@ const RegisterUI: React.FC<RegisterUIProps> = ({
             Create account
           </Text>
         </TouchableOpacity>
+
+        {errorMsg && <Text style={styles.errorMessage}>{errorMsg}</Text>}
 
         <View style={styles.Div}>
           <Text style={styles.linkText}>Already have an account?</Text>
