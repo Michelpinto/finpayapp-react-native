@@ -10,9 +10,18 @@ interface Props {
 const Login: React.FC<Props> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = async () => {
     try {
+      if (!email || !password) {
+        setEmail('');
+        setPassword('');
+        setErrorMsg('Please enter your email and password');
+        setTimeout(() => setErrorMsg(''), 4000);
+        return;
+      }
+
       const { data } = await axios.post('http://localhost:6000/users/login', {
         email,
         password,
@@ -51,6 +60,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
       password={password}
       setPassword={setPassword}
       handleRegister={handleRegister}
+      errorMsg={errorMsg}
     />
   );
 };
