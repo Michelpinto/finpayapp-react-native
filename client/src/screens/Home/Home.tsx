@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Alert,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  Dimensions,
-  ActivityIndicator,
-} from 'react-native';
+import { Alert, Dimensions } from 'react-native';
 import axios from 'axios';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import HomeUI from './HomeUI';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -64,91 +55,7 @@ const Home: React.FC = ({ navigation, route }: any) => {
     getBalance();
   }, [id]);
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.logoutWrapper}>
-        <TouchableOpacity onPress={logout} style={styles.logout}>
-          <Text style={{ fontWeight: 'bold' }}>Log out</Text>
-        </TouchableOpacity>
-      </View>
-
-      <Text>{`Hello ${name}! welcome, your balance is ${balance}`}</Text>
-      <View style={styles.card}>
-        <TextInput
-          onChangeText={(email) => setReceiver(email)}
-          value={receiver}
-          style={styles.input}
-          placeholder='Email'
-          autoCapitalize='none'
-        />
-        <TextInput
-          onChangeText={(amount) => setAmount(amount)}
-          value={amount}
-          style={styles.input}
-          placeholder='Amount'
-        />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => !loading && sendMoney()}
-        >
-          <Text
-            style={{ color: 'white', fontWeight: '600', alignItems: 'center' }}
-          >
-            {loading ? <ActivityIndicator color={'white'} /> : 'Send money'}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
-  );
+  return <HomeUI name={name} logout={logout} balance={balance} />;
 };
 
 export default Home;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    // justifyContent: 'center',
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    width: '100%',
-  },
-  card: {
-    width: width - 32,
-    // height: height / 6,
-    borderWidth: 2,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    marginTop: 16,
-  },
-  button: {
-    width: '50%',
-    height: 40,
-    backgroundColor: '#89CFF0',
-    marginBottom: 16,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logoutWrapper: {
-    width: width - 32,
-    height: 52,
-    marginBottom: 32,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  logout: {
-    borderWidth: 2,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 42,
-    borderRadius: 10,
-  },
-});
