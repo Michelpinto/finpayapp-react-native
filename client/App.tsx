@@ -6,48 +6,51 @@ import Register from './src/screens/Register/Register';
 import Start from './src/screens/Start/Start';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SendMoney from './src/screens/SendMoney/SendMoney';
+import { ContextProvider } from './src/context/ContextApi';
 
 const Stack = createStackNavigator();
 const bottomTab = createBottomTabNavigator();
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
-          name='Start'
-          component={Start}
-        />
-        <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
-          name='Login'
-          component={Login}
-        />
-        <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
-          name='Register'
-          component={Register}
-        />
-        <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
-          name='BottomTab'
-          component={BottomTab}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name='Start'
+            component={Start}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name='Login'
+            component={Login}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name='Register'
+            component={Register}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name='BottomTab'
+            component={BottomTab}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ContextProvider>
   );
 }
 
-function BottomTab({ navigation, route }: any) {
+function BottomTab() {
   return (
     <bottomTab.Navigator initialRouteName='Home'>
       <bottomTab.Screen
