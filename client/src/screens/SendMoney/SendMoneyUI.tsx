@@ -18,6 +18,7 @@ interface SendMoneyUIProps {
   setAmount: (amount: string) => void;
   loading: boolean;
   sendMoney: () => void;
+  balance: number;
 }
 
 const SendMoneyUI: React.FC<SendMoneyUIProps> = ({
@@ -28,9 +29,11 @@ const SendMoneyUI: React.FC<SendMoneyUIProps> = ({
   setReceiver,
   loading,
   sendMoney,
+  balance,
 }) => {
   return (
     <View style={styles.container}>
+      <Text style={styles.balanceText}>$ {balance}.00</Text>
       <Image
         style={styles.Image}
         source={require('../../../assets/sendMoneyAsset.png')}

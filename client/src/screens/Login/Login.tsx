@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginUI from './LoginUI';
+import { ContextApi, PropsContext } from '../../context/ContextApi';
 
 interface Props {
   navigation: any;
@@ -11,45 +12,45 @@ const Login: React.FC<Props> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const { login, user, userLoading, failedLogin, setFailedLogin } =
+    useContext(ContextApi);
 
   const handleSubmit = async () => {
-    try {
-      if (!email || !password) {
-        setEmail('');
-        setPassword('');
-        setErrorMsg('Please enter your email and password');
-        setTimeout(() => setErrorMsg(''), 4000);
-        return;
-      }
+    if (!email || !password) {
+      setEmail('');
+      setPassword('');
+      setErrorMsg('Please enter your email and password');
+      setTimeout(() => setErrorMsg(''), 4000);
+      return;
+    }
 
-      const { data } = await axios.post('http://localhost:6000/users/login', {
-        email,
-        password,
-      });
+    if (!login) return null;
 
-      const user = JSON.stringify({
-        email: data?.email,
-        id: data?._id,
-        name: data?.name,
-        token: data?.token,
-      });
+    await login({ email, password });
 
-      await AsyncStorage.setItem('@finpayApp:user', user);
-
+    if (user) {
       navigation.navigate('BottomTab', {
         screen: 'Home',
         params: {
-          email: data?.email,
-          id: data?._id,
-          name: data?.name,
+          email: user.email,
+          id: user.id,
+          name: user.name,
         },
       });
       setEmail('');
       setPassword('');
-    } catch (error) {
-      console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (failedLogin) {
+      setEmail('');
+      setPassword('');
+      setTimeout(() => {
+        setFailedLogin && setFailedLogin('');
+      }, 4000);
+    }
+  }, [failedLogin]);
 
   const handleRegister = () => {
     navigation.navigate('Register');
@@ -63,7 +64,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
       password={password}
       setPassword={setPassword}
       handleRegister={handleRegister}
-      errorMsg={errorMsg}
+      errorMsg={errorMsg || failedLogin}
     />
   );
 };
