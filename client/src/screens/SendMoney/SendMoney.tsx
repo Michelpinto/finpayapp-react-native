@@ -1,28 +1,17 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import SendMoneyUI from './SendMoneyUI';
 import { Alert } from 'react-native';
+import { ContextApi, IUser } from '../../context/ContextApi';
 
 // import { Container } from './styles';
 
 const SendMoney: React.FC = ({ navigation, route }: any) => {
-  const { email, id } = route.params || {};
   const [receiver, setReceiver] = useState('');
   const [amount, setAmount] = useState('0');
   const [loading, setLoading] = useState(false);
-  const [balance, setBalance] = useState(0);
-
-  const getBalance = async () => {
-    try {
-      console.log('id', id);
-      const { data } = await axios.get(
-        `http://localhost:6000/balance/user/${id}`
-      );
-      setBalance(data.balance);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { user, balance, getBalance } = useContext(ContextApi);
+  const { id, email } = user as IUser;
 
   const sendMoney = async () => {
     try {
@@ -33,7 +22,9 @@ const SendMoney: React.FC = ({ navigation, route }: any) => {
         amount: Number(amount),
       });
 
-      await getBalance();
+      if (getBalance) {
+        await getBalance(id);
+      }
 
       setReceiver('');
       setAmount('0');
@@ -54,6 +45,7 @@ const SendMoney: React.FC = ({ navigation, route }: any) => {
       setAmount={setAmount}
       loading={loading}
       sendMoney={sendMoney}
+      balance={balance}
     />
   );
 };
