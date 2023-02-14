@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 import { styles } from './homeStyles';
 
@@ -32,32 +25,6 @@ const HomeUI: React.FC<HomeUIProps> = ({ logout, balance, name }) => {
         <Text style={styles.balance}>${balance}.00</Text>
         <Image source={require('../../../assets/balanceAsset.png')} />
       </View>
-
-      {/* <View style={styles.card}>
-        <TextInput
-          onChangeText={(email) => setReceiver(email)}
-          value={receiver}
-          style={styles.input}
-          placeholder='Email'
-          autoCapitalize='none'
-        />
-        <TextInput
-          onChangeText={(amount) => setAmount(amount)}
-          value={amount}
-          style={styles.input}
-          placeholder='Amount'
-        />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => !loading && sendMoney()}
-        >
-          <Text
-            style={{ color: 'white', fontWeight: '600', alignItems: 'center' }}
-          >
-            {loading ? <ActivityIndicator color={'white'} /> : 'Send money'}
-          </Text>
-        </TouchableOpacity>
-      </View> */}
     </View>
   );
 };

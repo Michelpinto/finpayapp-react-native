@@ -36,10 +36,13 @@ const Login: React.FC<Props> = ({ navigation }) => {
 
       await AsyncStorage.setItem('@finpayApp:user', user);
 
-      navigation.navigate('Home', {
-        email: data?.email,
-        id: data?._id,
-        name: data?.name,
+      navigation.navigate('BottomTab', {
+        screen: 'Home',
+        params: {
+          email: data?.email,
+          id: data?._id,
+          name: data?.name,
+        },
       });
       setEmail('');
       setPassword('');
