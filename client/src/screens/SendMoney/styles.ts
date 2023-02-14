@@ -7,6 +7,12 @@ export const styles = StyleSheet.create({
     paddingVertical: 120,
     paddingHorizontal: 20,
   },
+  balanceText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: 'green',
+  },
   welcomeText: {
     fontSize: 20,
     marginBottom: 20,
@@ -26,6 +32,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 15,
     textAlign: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
     height: 50,
     color: '#fff',
