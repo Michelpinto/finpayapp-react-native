@@ -1,13 +1,16 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import Home from './src/screens/Home/Home';
 import Login from './src/screens/Login/Login';
 import Register from './src/screens/Register/Register';
 import Start from './src/screens/Start/Start';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import SendMoney from './src/screens/SendMoney/SendMoney';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
+const bottomTab = createBottomTabNavigator();
 
-export default function App() {
+function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -36,10 +39,33 @@ export default function App() {
           options={{
             headerShown: false,
           }}
-          name='Home'
-          component={Home}
+          name='BottomTab'
+          component={BottomTab}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+function BottomTab({ navigation, route }: any) {
+  return (
+    <bottomTab.Navigator initialRouteName='Home'>
+      <bottomTab.Screen
+        options={{
+          headerShown: false,
+        }}
+        name='Home'
+        component={Home}
+      />
+      <bottomTab.Screen
+        options={{
+          headerShown: false,
+        }}
+        name='SendMoney'
+        component={SendMoney}
+      />
+    </bottomTab.Navigator>
+  );
+}
+
+export default App;
