@@ -12,8 +12,14 @@ const Login: React.FC<Props> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const { login, user, userLoading, failedLogin, setFailedLogin } =
-    useContext(ContextApi);
+  const {
+    login,
+    user,
+    userLoading,
+    failedLogin,
+    setFailedLogin,
+    setIsSignedIn,
+  } = useContext(ContextApi);
 
   const handleSubmit = async () => {
     if (!email || !password) {
@@ -29,14 +35,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
     await login({ email, password });
 
     if (user) {
-      navigation.navigate('BottomTab', {
-        screen: 'Home',
-        params: {
-          email: user.email,
-          id: user.id,
-          name: user.name,
-        },
-      });
+      setIsSignedIn(true);
       setEmail('');
       setPassword('');
     }
@@ -65,6 +64,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
       setPassword={setPassword}
       handleRegister={handleRegister}
       errorMsg={errorMsg || failedLogin}
+      userLoading={userLoading}
     />
   );
 };
