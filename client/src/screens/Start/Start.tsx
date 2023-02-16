@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 import { styles } from './startStyles';
 
 interface Props {
-  navigation: any;
+  navigation?: any;
 }
 
 const Start: React.FC<Props> = ({ navigation }) => {

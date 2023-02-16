@@ -11,6 +11,7 @@ interface Props {
   handleSubmit: () => void;
   handleRegister: () => void;
   errorMsg: string;
+  userLoading?: boolean;
 }
 
 const LoginUI: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const LoginUI: React.FC<Props> = ({
   handleSubmit,
   handleRegister,
   errorMsg,
+  userLoading,
 }) => {
   return (
     <View style={styles.container}>
@@ -45,7 +47,7 @@ const LoginUI: React.FC<Props> = ({
 
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={{ color: '#fff', fontSize: 16, textAlign: 'center' }}>
-          Login
+          {userLoading ? 'Loading...' : 'Login'}
         </Text>
       </TouchableOpacity>
 

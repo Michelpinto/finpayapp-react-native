@@ -1,73 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Home from './src/screens/Home/Home';
-import Login from './src/screens/Login/Login';
-import Register from './src/screens/Register/Register';
-import Start from './src/screens/Start/Start';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import SendMoney from './src/screens/SendMoney/SendMoney';
 import { ContextProvider } from './src/context/ContextApi';
-
-const Stack = createStackNavigator();
-const bottomTab = createBottomTabNavigator();
+import Route from './src/routes/Route';
 
 function App() {
   return (
     <ContextProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
-            name='Start'
-            component={Start}
-          />
-          <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
-            name='Login'
-            component={Login}
-          />
-          <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
-            name='Register'
-            component={Register}
-          />
-          <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
-            name='BottomTab'
-            component={BottomTab}
-          />
-        </Stack.Navigator>
+        <Route />
       </NavigationContainer>
     </ContextProvider>
-  );
-}
-
-function BottomTab() {
-  return (
-    <bottomTab.Navigator initialRouteName='Home'>
-      <bottomTab.Screen
-        options={{
-          headerShown: false,
-        }}
-        name='Home'
-        component={Home}
-      />
-      <bottomTab.Screen
-        options={{
-          headerShown: false,
-        }}
-        name='SendMoney'
-        component={SendMoney}
-      />
-    </bottomTab.Navigator>
   );
 }
 
