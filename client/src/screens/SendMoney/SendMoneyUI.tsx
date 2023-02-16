@@ -11,7 +11,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { styles } from './styles';
 
 interface SendMoneyUIProps {
-  email: string;
+  email: string | undefined;
   receiver: string;
   setReceiver: (receiver: string) => void;
   amount: string;
