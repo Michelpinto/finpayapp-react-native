@@ -11,19 +11,18 @@ const SendMoney: React.FC = ({ navigation, route }: any) => {
   const [amount, setAmount] = useState('0');
   const [loading, setLoading] = useState(false);
   const { user, balance, getBalance } = useContext(ContextApi);
-  const { id, email } = user as IUser;
 
   const sendMoney = async () => {
     try {
       setLoading(true);
       await axios.post(`http://localhost:6000/balance/send`, {
-        sender: id,
+        sender: user?.id,
         receiver,
         amount: Number(amount),
       });
 
-      if (getBalance) {
-        await getBalance(id);
+      if (getBalance && user) {
+        await getBalance(user.id);
       }
 
       setReceiver('');
@@ -38,7 +37,7 @@ const SendMoney: React.FC = ({ navigation, route }: any) => {
 
   return (
     <SendMoneyUI
-      email={email}
+      email={user?.email}
       receiver={receiver}
       setReceiver={setReceiver}
       amount={amount}
