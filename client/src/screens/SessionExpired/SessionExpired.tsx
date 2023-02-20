@@ -12,30 +12,33 @@ const SessionExpired: React.FC = () => {
     userLoading,
     setFailedLogin,
     setUserLoading,
-    setSessionExpired,
+    setIsSessionExpired,
     setUser,
+    setIsSignedIn,
   } = useContext(ContextApi);
 
   const handleSession = async () => {
-    try {
-      setUserLoading(true);
-      await checkSession(password);
-
-      setUserLoading(false);
-      setSessionExpired(false);
-    } catch (error: any) {
-      setUserLoading(false);
-      setFailedLogin('Invalid password');
-      setPassword('');
-      setTimeout(() => {
-        setFailedLogin && setFailedLogin('');
-      }, 4000);
-    }
+    // try {
+    //   setUserLoading(true);
+    //   await checkSession(password);
+    //   setIsSignedIn(true);
+    //   setUserLoading(false);
+    //   setIsSessionExpired(false);
+    // } catch (error: any) {
+    //   setUserLoading(false);
+    //   setFailedLogin('Invalid password');
+    //   setPassword('');
+    //   setTimeout(() => {
+    //     setFailedLogin && setFailedLogin('');
+    //   }, 4000);
+    // }
   };
 
   const logout = () => {
     AsyncStorage.removeItem('@finpayApp:user');
     setUser(null);
+    setIsSessionExpired(false);
+    setIsSignedIn(false);
   };
 
   return (

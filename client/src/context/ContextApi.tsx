@@ -18,9 +18,9 @@ export interface PropsContext {
   balance: number;
   getBalance?: (id: string) => Promise<void>;
   checkSession: (password: string) => Promise<void>;
-  sessionExpired: boolean;
+  isSessionExpired: boolean;
   setUserLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setSessionExpired: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSessionExpired: React.Dispatch<React.SetStateAction<boolean>>;
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
   isSignedIn: boolean;
   setIsSignedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,11 +34,11 @@ export const ContextApi = createContext<PropsContext>({
   user: null,
   failedLogin: '',
   balance: 0,
-  sessionExpired: true,
+  isSessionExpired: true,
   checkSession: () => new Promise(() => {}),
   setUserLoading: () => {},
   setFailedLogin: () => {},
-  setSessionExpired: () => {},
+  setIsSessionExpired: () => {},
   setUser: () => {},
   isSignedIn: false,
   setIsSignedIn: () => {},
@@ -50,7 +50,7 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [user, setUser] = useState<IUser | null>(null);
   const [balance, setBalance] = useState(0);
-  const [sessionExpired, setSessionExpired] = useState(true);
+  const [isSessionExpired, setIsSessionExpired] = useState(false);
 
   const login = async (userData: { email: string; password: string }) => {
     try {
@@ -58,7 +58,7 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
       const { data } = await axios.post('http://localhost:6000/users/login', {
         ...userData,
       });
-      setSessionExpired(false);
+      // setIsSessionExpired(false);
 
       const user = JSON.stringify({
         email: data?.email,
@@ -66,6 +66,8 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
         name: data?.name,
         token: data?.token,
       });
+
+      getBalance(data?._id);
 
       await AsyncStorage.setItem('@finpayApp:user', user);
       setUser(JSON.parse(user));
@@ -96,25 +98,19 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
   };
 
   const checkSession = async (password: string) => {
-    if (user) {
-      await axios.post('http://localhost:6000/users/login', {
-        email: user.email,
-        password: password,
-      });
-    }
+    // if (user) {
+    //   await axios.post('http://localhost:6000/users/login', {
+    //     email: user.email,
+    //     password: password,
+    //   });
+    //   setIsSessionExpired(false);
+    //   getBalance(user.id);
+    // }
   };
 
-  useEffect(() => {
-    if (user && !sessionExpired) {
-      getBalance(user.id);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (sessionExpired) {
-      getUser();
-    }
-  }, []);
+  // useEffect(() => {
+  //   getBalance(user?.id || '');
+  // }, [user]);
 
   return (
     <ContextApi.Provider
@@ -127,9 +123,9 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
         balance,
         getBalance,
         checkSession,
-        sessionExpired,
+        isSessionExpired,
         setUserLoading,
-        setSessionExpired,
+        setIsSessionExpired,
         setUser,
         isSignedIn,
         setIsSignedIn,
