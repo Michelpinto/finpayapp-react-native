@@ -19,6 +19,7 @@ interface SendMoneyUIProps {
   loading: boolean;
   sendMoney: () => void;
   balance: number;
+  errorMsg: string;
 }
 
 const SendMoneyUI: React.FC<SendMoneyUIProps> = ({
@@ -30,6 +31,7 @@ const SendMoneyUI: React.FC<SendMoneyUIProps> = ({
   loading,
   sendMoney,
   balance,
+  errorMsg,
 }) => {
   return (
     <View style={styles.container}>
@@ -63,6 +65,8 @@ const SendMoneyUI: React.FC<SendMoneyUIProps> = ({
           {loading ? <ActivityIndicator color={'white'} /> : 'Send money'}
         </Text>
       </TouchableOpacity>
+
+      {errorMsg && <Text style={styles.error}>{errorMsg}</Text>}
     </View>
   );
 };

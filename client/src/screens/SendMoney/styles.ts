@@ -41,6 +41,13 @@ export const styles = StyleSheet.create({
   Image: {
     marginBottom: 30,
   },
+
+  error: {
+    color: 'red',
+    fontSize: 14,
+    marginTop: 15,
+    textAlign: 'center',
+  },
   // logoutWrapper: {
   //   width: width - 32,
   //   height: 52,

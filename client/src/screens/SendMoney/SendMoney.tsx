@@ -11,8 +11,24 @@ const SendMoney: React.FC = ({ navigation, route }: any) => {
   const [amount, setAmount] = useState('0');
   const [loading, setLoading] = useState(false);
   const { user, balance, getBalance } = useContext(ContextApi);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
   const sendMoney = async () => {
+    if (Number(amount) > balance) {
+      setErrorMsg('Insufficient balance');
+      setTimeout(() => setErrorMsg(''), 4000);
+      return;
+    } else if (Number(amount) <= 0) {
+      setErrorMsg('Amount must be greater than 0');
+      setTimeout(() => setErrorMsg(''), 4000);
+      return;
+    } else if (receiver === '' || !emailPattern.test(receiver)) {
+      setErrorMsg('Receiver email is required');
+      setTimeout(() => setErrorMsg(''), 4000);
+      return;
+    }
     try {
       setLoading(true);
       await axios.post(`http://localhost:6000/balance/send`, {
@@ -45,6 +61,7 @@ const SendMoney: React.FC = ({ navigation, route }: any) => {
       loading={loading}
       sendMoney={sendMoney}
       balance={balance}
+      errorMsg={errorMsg}
     />
   );
 };
