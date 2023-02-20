@@ -6,22 +6,28 @@ import { RouteStack, RouteStartStack } from './RouteStack';
 import { BottomTab } from './RouteTab';
 
 const Route = () => {
-  const { user, sessionExpired, isSignedIn } = useContext(ContextApi);
+  const { user, isSessionExpired, isSignedIn } = useContext(ContextApi);
 
-  // const screenSelected = useCallback(() => {
-  //   if (user === null && sessionExpired) {
-  //     console.log(user, sessionExpired);
-  //     return <SessionExpired />;
-  //   } else if (user && sessionExpired === false) {
-  //     console.log('home');
-  //     return <RouteStartStack />;
-  //   }
-  //   console.log('login', user, sessionExpired);
+  const handleHomeScreen = () => {
+    if (isSignedIn) {
+      return <RouteStack />;
+    }
+  };
 
-  //   return <BottomTab />;
-  // }, [user]);
+  const handleLoginScreen = () => {
+    if (user === null && !isSignedIn && isSessionExpired === false) {
+      return <RouteStartStack />;
+    }
+  };
 
-  return isSignedIn ? <RouteStack /> : <RouteStartStack />;
+  const handleSessionExpired = () => {
+    if (isSessionExpired === true) {
+      return <SessionExpired />;
+    }
+  };
+
+  return <>{isSignedIn ? <RouteStack /> : <RouteStartStack />}</>;
+  //
 };
 
 export default Route;
