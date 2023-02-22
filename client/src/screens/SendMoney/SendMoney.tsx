@@ -2,11 +2,9 @@ import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import SendMoneyUI from './SendMoneyUI';
 import { Alert } from 'react-native';
-import { ContextApi, IUser } from '../../context/ContextApi';
+import { ContextApi } from '../../context/ContextApi';
 
-// import { Container } from './styles';
-
-const SendMoney: React.FC = ({ navigation, route }: any) => {
+const SendMoney: React.FC = () => {
   const [receiver, setReceiver] = useState('');
   const [amount, setAmount] = useState('0');
   const [loading, setLoading] = useState(false);
