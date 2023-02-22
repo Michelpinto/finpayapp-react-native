@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home/Home';
+import Movements from '../screens/Movements/Movements';
 import SendMoney from '../screens/SendMoney/SendMoney';
 
 const bottomTab = createBottomTabNavigator();
@@ -20,6 +21,13 @@ export function BottomTab() {
         }}
         name='SendMoney'
         component={SendMoney}
+      />
+      <bottomTab.Screen
+        options={{
+          headerShown: false,
+        }}
+        name='Movements'
+        component={Movements}
       />
     </bottomTab.Navigator>
   );
