@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginUI from './LoginUI';
-import { ContextApi, PropsContext } from '../../context/ContextApi';
+import { ContextApi } from '../../context/ContextApi';
 
 interface Props {
   navigation: any;
