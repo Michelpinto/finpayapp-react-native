@@ -12,7 +12,6 @@ const Movements: React.FC = () => {
       const { data } = await axios.get(
         `http://localhost:6000/balance/user/${user?.id}`
       );
-      console.log(data.lastMovements);
       getBalance && getBalance(user?.id || '');
       setMovements(data.lastMovements.reverse());
     } catch (error) {
@@ -22,7 +21,8 @@ const Movements: React.FC = () => {
 
   useEffect(() => {
     handleMovement();
-  }, [user]);
+    getBalance && getBalance(user?.id || '');
+  }, [user, getBalance, balance]);
 
   return <MovementsUI movements={movements} />;
 };
