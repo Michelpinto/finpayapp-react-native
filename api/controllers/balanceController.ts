@@ -42,12 +42,20 @@ const getUserBalance = asyncHandler(
     try {
       const balance = await Balance.find({ user: req.params.id });
       let totalBalance = getTotalBalance(balance);
+      let lastMovements = balance.slice(-5).map((mov) => {
+        return {
+          balance: mov.balance,
+          date: mov.createdAt,
+        };
+      });
 
-      res.status(200).json({ balance: totalBalance });
+      res.status(200).json({
+        currentBalance: totalBalance,
+        lastMovements: lastMovements,
+      });
     } catch (err: any) {
       console.log(err);
       res.status(400);
-      // throw new Error('Invalid user data');
     }
   }
 );

@@ -84,7 +84,7 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
       const { data } = await axios.get(
         `http://localhost:6000/balance/user/${id}`
       );
-      setBalance(data.balance);
+      setBalance(data.currentBalance);
     } catch (error) {
       console.log(error);
     }
