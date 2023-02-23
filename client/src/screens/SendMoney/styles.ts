@@ -48,22 +48,4 @@ export const styles = StyleSheet.create({
     marginTop: 15,
     textAlign: 'center',
   },
-  // logoutWrapper: {
-  //   width: width - 32,
-  //   height: 52,
-  //   marginBottom: 32,
-  //   flexDirection: 'row',
-  //   justifyContent: 'flex-end',
-  // },
-  // logout: {
-  //   borderWidth: 2,
-  //   paddingHorizontal: 10,
-  //   paddingVertical: 10,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   height: 42,
-  //   borderRadius: 10,
-  //   backgroundColor: '#1d1d1d',
-  //   color: '#fff',
-  // },
 });
