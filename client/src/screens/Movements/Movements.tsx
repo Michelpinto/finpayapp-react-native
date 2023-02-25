@@ -5,16 +5,21 @@ import MovementsUI from './MovementsUI';
 
 const Movements: React.FC = () => {
   const [movements, setMovements] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const { user, getBalance, balance } = useContext(ContextApi);
 
   const handleMovement = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(
         `http://localhost:6000/balance/user/${user?.id}`
       );
+
       getBalance && getBalance(user?.id || '');
       setMovements(data.lastMovements.reverse());
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -24,7 +29,7 @@ const Movements: React.FC = () => {
     getBalance && getBalance(user?.id || '');
   }, [user, getBalance, balance]);
 
-  return <MovementsUI movements={movements} />;
+  return <MovementsUI loading={loading} movements={movements} />;
 };
 
 export default Movements;

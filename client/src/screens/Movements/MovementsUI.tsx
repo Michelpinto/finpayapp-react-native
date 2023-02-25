@@ -5,9 +5,10 @@ import { styles } from './movStyles';
 
 interface Props {
   movements: any[];
+  loading: boolean;
 }
 
-const MovementsUI: React.FC<Props> = ({ movements }) => {
+const MovementsUI: React.FC<Props> = ({ movements, loading }) => {
   return (
     <View style={styles.container}>
       <Image
@@ -16,11 +17,8 @@ const MovementsUI: React.FC<Props> = ({ movements }) => {
       />
       <Text style={styles.text}>Past transactions</Text>
       {movements.length > 0 ? (
-        movements.map((movement) => (
-          <View
-            key={movement.index}
-            style={[styles.itemContainer, styles.shadowProp]}
-          >
+        movements.map((movement, index) => (
+          <View key={index} style={[styles.itemContainer, styles.shadowProp]}>
             <Text
               style={{
                 marginBottom: 5,
@@ -35,7 +33,7 @@ const MovementsUI: React.FC<Props> = ({ movements }) => {
           </View>
         ))
       ) : (
-        <EmptyState />
+        <EmptyState loading={loading} />
       )}
     </View>
   );
