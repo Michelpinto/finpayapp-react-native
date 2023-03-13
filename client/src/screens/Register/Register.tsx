@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RegisterUI from './RegisterUI';
+import { api } from '../../services/api';
 
 interface Props {
   navigation: any;
@@ -24,7 +25,7 @@ const Register: React.FC<Props> = ({ navigation }) => {
         return;
       }
 
-      const { data } = await axios.post('http://localhost:6000/users', {
+      const { data } = await api.post('users', {
         name,
         email,
         password,
