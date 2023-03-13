@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
   },
   img: {
     alignSelf: 'center',
-    marginVertical: 30,
+    marginVertical: 20,
   },
   text: {
     fontSize: 20,

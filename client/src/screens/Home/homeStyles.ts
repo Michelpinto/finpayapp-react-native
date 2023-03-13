@@ -6,13 +6,13 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingVertical: 120,
+    paddingVertical: 100,
     paddingHorizontal: 20,
   },
   title: {
     fontSize: 40,
     marginTop: 20,
-    marginBottom: 50,
+    marginBottom: 30,
   },
   welcomeText: {
     fontSize: 20,
@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
   logoutWrapper: {
     width: width - 32,
     height: 52,
-    marginBottom: 32,
+    marginBottom: 20,
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
