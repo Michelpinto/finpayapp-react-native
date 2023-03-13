@@ -45,6 +45,14 @@ export function RouteStack() {
         name='BottomTab'
         component={BottomTab}
       />
+
+      {/* <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name='SessionExpired'
+        component={SessionExpired}
+      /> */}
     </Stack.Navigator>
   );
 }

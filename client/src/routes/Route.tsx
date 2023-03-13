@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { ContextApi } from '../context/ContextApi';
 import SessionExpired from '../screens/SessionExpired/SessionExpired';
 import Start from '../screens/Start/Start';
@@ -6,27 +6,35 @@ import { RouteStack, RouteStartStack } from './RouteStack';
 import { BottomTab } from './RouteTab';
 
 const Route = () => {
-  const { user, isSessionExpired, isSignedIn } = useContext(ContextApi);
+  const { user, isSessionExpired, isSignedIn, userRemoved } =
+    useContext(ContextApi);
 
-  const handleHomeScreen = () => {
+  const handleHomeScreen = useCallback(() => {
     if (isSignedIn) {
-      return <RouteStack />;
+      return <BottomTab />;
     }
-  };
+  }, [isSignedIn]);
 
-  const handleLoginScreen = () => {
+  const handleLoginScreen = useCallback(() => {
     if (user === null && !isSignedIn && isSessionExpired === false) {
       return <RouteStartStack />;
     }
-  };
+  }, [isSessionExpired, isSignedIn, user]);
 
-  const handleSessionExpired = () => {
+  const handleSessionExpired = useCallback(() => {
     if (isSessionExpired === true) {
       return <SessionExpired />;
     }
-  };
+  }, [isSessionExpired]);
 
-  return <>{isSignedIn ? <RouteStack /> : <RouteStartStack />}</>;
+  return (
+    <>
+      {/* {handleHomeScreen()}
+      {handleLoginScreen()}
+      {handleSessionExpired()} */}
+      {isSignedIn ? <RouteStack /> : <RouteStartStack />}
+    </>
+  );
   //
 };
 
