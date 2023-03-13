@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { api } from '../services/api';
 
 export interface IUser {
   email: string;
@@ -24,6 +25,8 @@ export interface PropsContext {
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
   isSignedIn: boolean;
   setIsSignedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  userRemoved: boolean;
+  setUserRemoved: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface Props {
@@ -42,6 +45,8 @@ export const ContextApi = createContext<PropsContext>({
   setUser: () => {},
   isSignedIn: false,
   setIsSignedIn: () => {},
+  userRemoved: false,
+  setUserRemoved: () => {},
 });
 
 export const ContextProvider: React.FC<Props> = ({ children }) => {
@@ -51,14 +56,15 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [balance, setBalance] = useState(0);
   const [isSessionExpired, setIsSessionExpired] = useState(false);
+  const [userRemoved, setUserRemoved] = useState(false);
 
   const login = async (userData: { email: string; password: string }) => {
     try {
       setUserLoading(true);
-      const { data } = await axios.post('http://localhost:6000/users/login', {
+      const { data } = await api.post('users/login', {
         ...userData,
       });
-      // setIsSessionExpired(false);
+      setIsSessionExpired(false);
 
       const user = JSON.stringify({
         email: data?.email,
@@ -81,35 +87,43 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
 
   const getBalance = async (id: string) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:6000/balance/user/${id}`
-      );
+      const { data } = await api.get(`balance/user/${id}`);
       setBalance(data.currentBalance);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getUser = async () => {
-    const user = await AsyncStorage.getItem('@finpayApp:user');
+  const checkSession = async (password: string) => {
     if (user) {
-      setUser(JSON.parse(user));
+      try {
+        await api.post('users/login', {
+          email: user.email,
+          password,
+        });
+        setIsSessionExpired(false);
+        getBalance(user.id);
+      } catch (error) {
+        console.log(error);
+        setIsSessionExpired(true);
+      }
     }
   };
 
-  const checkSession = async (password: string) => {
-    // if (user) {
-    //   await axios.post('http://localhost:6000/users/login', {
-    //     email: user.email,
-    //     password: password,
-    //   });
-    //   setIsSessionExpired(false);
-    //   getBalance(user.id);
-    // }
+  const removeUser = async () => {
+    await AsyncStorage.removeItem('@finpayApp:user');
+    setUserRemoved(true);
   };
 
   // useEffect(() => {
-  //   getBalance(user?.id || '');
+  //   const sessionTimeout = setTimeout(() => {
+  //     removeUser();
+  //     setIsSessionExpired(true);
+  //     setIsSignedIn(false);
+  //   }, 1000);
+
+  //   console.log('user', user);
+  //   return () => clearTimeout(sessionTimeout);
   // }, [user]);
 
   return (
@@ -129,6 +143,8 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
         setUser,
         isSignedIn,
         setIsSignedIn,
+        userRemoved,
+        setUserRemoved,
       }}
     >
       {children}

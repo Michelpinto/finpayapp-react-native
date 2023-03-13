@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import SendMoneyUI from './SendMoneyUI';
 import { Alert } from 'react-native';
 import { ContextApi } from '../../context/ContextApi';
+import { api } from '../../services/api';
 
 const SendMoney: React.FC = () => {
   const [receiver, setReceiver] = useState('');
@@ -29,7 +30,7 @@ const SendMoney: React.FC = () => {
     }
     try {
       setLoading(true);
-      await axios.post(`http://localhost:6000/balance/send`, {
+      await api.post(`balance/send`, {
         sender: user?.id,
         receiver,
         amount: Number(amount),

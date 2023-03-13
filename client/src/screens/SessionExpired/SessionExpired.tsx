@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useContext } from 'react';
-import { Navigation } from 'swiper';
 import { ContextApi } from '../../context/ContextApi';
 import SessionExpiredUI from './SessionExpiredUI';
 
@@ -12,26 +11,30 @@ const SessionExpired: React.FC = () => {
     userLoading,
     setFailedLogin,
     setUserLoading,
+    isSessionExpired,
     setIsSessionExpired,
     setUser,
     setIsSignedIn,
+    setUserRemoved,
   } = useContext(ContextApi);
 
   const handleSession = async () => {
-    // try {
-    //   setUserLoading(true);
-    //   await checkSession(password);
-    //   setIsSignedIn(true);
-    //   setUserLoading(false);
-    //   setIsSessionExpired(false);
-    // } catch (error: any) {
-    //   setUserLoading(false);
-    //   setFailedLogin('Invalid password');
-    //   setPassword('');
-    //   setTimeout(() => {
-    //     setFailedLogin && setFailedLogin('');
-    //   }, 4000);
-    // }
+    if (isSessionExpired === true && user !== null) {
+      try {
+        setUserLoading(true);
+        await checkSession(password);
+        setIsSignedIn(true);
+        setUserLoading(false);
+        setIsSessionExpired(false);
+      } catch (error: any) {
+        setUserLoading(false);
+        setFailedLogin('Invalid password');
+        setPassword('');
+        setTimeout(() => {
+          setFailedLogin && setFailedLogin('');
+        }, 4000);
+      }
+    }
   };
 
   const logout = () => {
@@ -39,6 +42,7 @@ const SessionExpired: React.FC = () => {
     setUser(null);
     setIsSessionExpired(false);
     setIsSignedIn(false);
+    setUserRemoved(true);
   };
 
   return (

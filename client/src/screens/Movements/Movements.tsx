@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { ContextApi } from '../../context/ContextApi';
 import MovementsUI from './MovementsUI';
+import { api } from '../../services/api';
 
 const Movements: React.FC = () => {
   const [movements, setMovements] = useState<any[]>([]);
@@ -11,9 +12,7 @@ const Movements: React.FC = () => {
   const handleMovement = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        `http://localhost:6000/balance/user/${user?.id}`
-      );
+      const { data } = await api.get(`balance/user/${user?.id}`);
 
       getBalance && getBalance(user?.id || '');
       setMovements(data.lastMovements.reverse());
